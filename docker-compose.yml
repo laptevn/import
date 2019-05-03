@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: "postgres"
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=123
+  import:
+      image: "import"
+      container_name: import
+      depends_on:
+        - db
+      environment:
+        - spring.datasource.url=jdbc:postgresql://db:5432/postgres
+        - spring.datasource.username=postgres
+        - spring.datasource.password=123
+        - batch-size=50
+        - query-id=10040000
